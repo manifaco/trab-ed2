@@ -21,9 +21,9 @@ Nomes (N°USP):
 #define ORDEM 6
 #define MIN_CHAVES (ORDEM/2 - 1)
 
-typedef int      id_type;
+typedef uint32_t      id_type;
 typedef long int  offset_t;
-typedef int      page_t;
+typedef uint32_t      page_t;
 
 typedef struct {
 	id_type id;
@@ -32,13 +32,13 @@ typedef struct {
 
 typedef struct {
 	page_t root;
-	int num_pages;
+	uint32_t num_pages;
 	page_t empty_pages;
 	FILE *fd; // arquivo da árvore que fica constantemente aberto
 } arvoreb_t;
 
 typedef struct arvoreb_node_t {
-	int page_num; // é o número da página no disco, começa no 1
+	uint32_t page_num; // é o número da página no disco, começa no 1
 	arvoreb_elem_t chaves[ORDEM-1];
 	page_t filhos[ORDEM];
 	uint8_t num_chaves;

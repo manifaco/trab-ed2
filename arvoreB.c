@@ -13,6 +13,7 @@ Nomes (N°USP):
 #include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
+
 #include "arvoreB.h"
 #include "misc.h"
 
@@ -55,7 +56,7 @@ arvoreb_t *createArvoreB() {
 void saveToFileArvoreB(arvoreb_t *arv) {
 	rewind(arv->fd);
 	fwrite(&arv->root, sizeof(page_t), 1, arv->fd);
-	fwrite(&arv->num_pages, sizeof(uint), 1, arv->fd);
+	fwrite(&arv->num_pages, sizeof(uint32_t), 1, arv->fd);
 	fwrite(&arv->empty_pages, sizeof(page_t), 1, arv->fd);
 	fflush(arv->fd);
 }
@@ -67,7 +68,7 @@ void loadArvoreBFromFile(arvoreb_t *arv) {
 	debug("Carregando a árvore da memória\n");
 	rewind(arv->fd);
 	fread(&arv->root, sizeof(page_t), 1, arv->fd);
-	fread(&arv->num_pages, sizeof(uint), 1, arv->fd);
+	fread(&arv->num_pages, sizeof(uint32_t), 1, arv->fd);
 	fread(&arv->empty_pages, sizeof(page_t), 1, arv->fd);
 }
 
@@ -150,7 +151,7 @@ offset_t pageToOffset(page_t page) {
 	// anda o número de páginas
 	offset_t result = ((page - 1) * sizeof(arvoreb_node_t));
 	result += sizeof(page_t) * 2; // anda a raiz e o empty_pages
-	result += sizeof(uint); // anda o num_pages
+	result += sizeof(uint32_t); // anda o num_pages
 	return result;
 }
 
